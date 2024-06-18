@@ -1,6 +1,8 @@
 { pkgs, ...}:
 
 {
+  imports = [ ./home-manager.nix ./packages/sys-packages.nix ./packages/usr-packages.nix];
+
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 

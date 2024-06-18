@@ -7,5 +7,4 @@ environment.systemPackages = with pkgs; [
     git
     zsh
     keyd
-    kitty
 ];}

@@ -8,7 +8,6 @@
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ./base.nix
-      ./home-manager.nix
       ./desktop/default.nix
       #./laptop/default.nix
     ];

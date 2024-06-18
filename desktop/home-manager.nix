@@ -14,6 +14,7 @@
         config.input."type:keyboard" = {
 	 xkb_layout = "br";
 	};
+	config.output."*" = {scale = "1";mode = "2752x1152";};
       };
     };
     gtk = {
