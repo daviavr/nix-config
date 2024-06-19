@@ -20,7 +20,7 @@ in
           scale = "1";
           mode = "2752x1152";
         };
-        config.deafultWorkspace = "workspace number 1";
+        config.defaultWorkspace = "workspace number 1";
         config.keybindings = lib.mkOptionDefault{
           "${mod}+u" = "workspace number 1";
           "${mod}+i" = "workspace number 2";
