@@ -26,7 +26,7 @@
     extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
   };
 
-  users.users.davi.packages = with pkgs; [ glib ];
+  users.users.davi.packages = with pkgs; [ tofi swaybg vscodium ];
 
   programs.sway = {
     enable = true;

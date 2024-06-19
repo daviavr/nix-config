@@ -1,11 +1,33 @@
 { pkgs, lib, ...}:
-let mod = "Mod4";
+let 
+  mod = "Mod4";
+  cursorTheme = "Bibata-Modern-Classic";
+  cursorSize = 20;
+  cursorPackage = pkgs.bibata-cursors;
+  drun = "pkill tofi-drun || tofi-drun | xargs swaymsg exec --";
 in
 {
   imports = [
    <home-manager/nixos>
   ];
   home-manager.users.davi = {
+    home.pointerCursor = {
+      name = cursorTheme;
+      package = cursorPackage;
+      size = cursorSize;
+      x11 = {
+        enable = true;
+	defaultCursor = cursorTheme;
+      };
+      gtk.enable = true;
+    };
+
+    home.file = { 
+      ".config/tofi/config" = {
+        text = builtins.readFile ./tofi.settings;
+      };
+    };
+
     wayland.windowManager = {
       sway = {
         enable = true;
@@ -17,8 +39,8 @@ in
           xkb_layout = "br";
         };
         config.output."*" = {
-          scale = "1";
-          mode = "2752x1152";
+          scale = "1.25";
+          mode = "3440x1440@144Hz";
         };
         config.defaultWorkspace = "workspace number 1";
         config.keybindings = lib.mkOptionDefault{
@@ -40,8 +62,17 @@ in
           "${mod}+s" = "layout stacking";
           "${mod}+e" = "layout toggle split";
           "${mod}+q" = "kill";
+          "${mod}+d" = "exec --no-startup-id ${drun}";
+        };
+        config.seat."*" = {
+          xcursor_theme = "${cursorTheme} ${builtins.toString cursorSize}";
         };
       };
+    };
+
+    programs.vscode = {
+      enable = true;
+      package = pkgs.vscodium;
     };
     gtk = {
       enable = true;

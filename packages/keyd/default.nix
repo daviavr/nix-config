@@ -1,5 +1,5 @@
 { pkgs, ...}:
-let keydConf = builtins.readFile(./keymaps.conf);
+let keydConf = builtins.readFile ./keymaps.conf;
 in
 {
   systemd.services.keyd = {
