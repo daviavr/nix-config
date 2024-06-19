@@ -23,7 +23,7 @@
   xdg.portal = {
     enable = true;
     wlr.enable = true;
-    extraPortals = [ xdg-desktop-portal-gtk ];
+    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
   };
 
   users.users.davi.packages = with pkgs; [ glib ];
