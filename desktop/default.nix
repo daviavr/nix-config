@@ -3,9 +3,9 @@
   imports = [ ./home-manager.nix ../packages/sys-packages.nix ../packages/usr-packages.nix ];
   networking.hostName = "nixos-desktop";
 
-  services.gnome.gnome-keyring.enable = true;
   # to enable sway
   security.polkit.enable = true;
+  services.gnome.gnome-keyring.enable = true;
   systemd.user.services.polkit-gnome-authentication-agent-1 = {
     description = "polkit-gnome-authentication-agent-1";
     wantedBy = [ "graphical-session.target" ];
@@ -26,7 +26,15 @@
     extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
   };
 
-  users.users.davi.packages = with pkgs; [ tofi swaybg vscodium ];
+  users.users.davi.packages = with pkgs;
+  [ 
+    tofi
+    fuzzel
+    swaybg 
+    vscodium 
+    jq 
+    texlive.combined.scheme-full
+  ];
 
   programs.sway = {
     enable = true;

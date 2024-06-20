@@ -4,6 +4,7 @@
    <home-manager/nixos>
   ];
   home-manager.users.davi = { pkgs, ...}: {
+    targets.genericLinux.enable = true;
     programs.zsh = {
       enable = true;
       enableCompletion = true;

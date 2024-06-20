@@ -5,6 +5,7 @@ let
   cursorSize = 20;
   cursorPackage = pkgs.bibata-cursors;
   drun = "pkill tofi-drun || tofi-drun | xargs swaymsg exec --";
+  currPath = ./sway-scripts;
 in
 {
   imports = [
@@ -20,6 +21,11 @@ in
 	defaultCursor = cursorTheme;
       };
       gtk.enable = true;
+    };
+
+    programs.vscode = {
+      enable = true;
+      package = pkgs.vscodium;
     };
 
     home.file = { 
@@ -43,26 +49,33 @@ in
           mode = "3440x1440@144Hz";
         };
         config.defaultWorkspace = "workspace number 1";
+	#config.startup = [
+	#  { command = "" };  
+	#];
+	config.window.commands = [
+	  { criteria = { app_id = "dropin"; }; command = "move scratchpad"; }
+	];
         config.keybindings = lib.mkOptionDefault{
           "${mod}+u" = "workspace number 1";
           "${mod}+i" = "workspace number 2";
           "${mod}+o" = "workspace number 3";
-          "${mod}+m" = "workspace number 4";
+          "${mod}+p" = "workspace number 4";
           "${mod}+Shift+u" = "move container to workspace number 1";
           "${mod}+Shift+i" = "move container to workspace number 2";
           "${mod}+Shift+o" = "move container to workspace number 3";
-          "${mod}+Shift+m" = "move container to workspace number 4";
-          "${mod}+p" = "scratchpad show";
-          "${mod}+Shift+p"= "move scratchpad";
+          "${mod}+Shift+p" = "move container to workspace number 4";
+          "${mod}+m" = "exec ${currPath}/floating-terminal.sh";
+          "${mod}+Shift+n" = "exec ${currPath}/scratchpad.sh add";
+          "${mod}+n" = "exec ${currPath}/scratchpad.sh";
           "${mod}+Tab" = "workspace next";
           "${mod}+Escape" = "workspace prev";
           "${mod}+y" = "fullscreen toggle";
-          "${mod}+Shift+space" = "floating toggle";
+          "${mod}+Shift+space" = "exec ${currPath}/floating-toggle.sh";
           "${mod}+space" = "focus mode_toggle";
           "${mod}+s" = "layout stacking";
           "${mod}+e" = "layout toggle split";
-          "${mod}+q" = "kill";
-          "${mod}+d" = "exec --no-startup-id ${drun}";
+          "${mod}+q" = "exec ${currPath}/kill.sh";
+          "${mod}+d" = "exec ${drun}";
         };
         config.seat."*" = {
           xcursor_theme = "${cursorTheme} ${builtins.toString cursorSize}";
@@ -70,10 +83,6 @@ in
       };
     };
 
-    programs.vscode = {
-      enable = true;
-      package = pkgs.vscodium;
-    };
     gtk = {
       enable = true;
       gtk3 = {
