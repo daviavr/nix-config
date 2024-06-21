@@ -36,14 +36,22 @@
     package = pkgs.vscodium;
   };
 
+  home-manager.users.davi.programs.tmux = {
+    enable = true;
+    shell = "${pkgs.zsh}/bin/zsh";
+  };
+
+  services.gvfs.enable = true; 
   users.users.davi.packages = with pkgs;
   [ 
     swaybg 
     jq 
     texlive.combined.scheme-full
     pavucontrol
+    gnome.nautilus
   ];
   environment.systemPackages = with pkgs; [
     xdg-utils
+    gnome-text-editor
   ];
 }

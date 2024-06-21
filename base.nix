@@ -13,6 +13,9 @@
     shell = pkgs.zsh;
   };
 
+  services.gvfs.enable = true;
+  services.udisks2.enable = true;
+
   programs.zsh.enable = true;
 
   programs.firefox.enable = true;

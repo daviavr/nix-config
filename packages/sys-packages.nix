@@ -8,4 +8,7 @@ environment.systemPackages = with pkgs; [
     zsh
     keyd
     gparted
+    usbutils
+    udiskie
+    udisks
 ];}
