@@ -1,16 +1,20 @@
-{ pkgs, lib, ...}:
+{ config, pkgs, lib, ...}:
 let 
   mod = "Mod4";
   cursorTheme = "Bibata-Modern-Classic";
   cursorSize = 20;
   cursorPackage = pkgs.bibata-cursors;
-  drun = "pkill tofi-drun || tofi-drun | xargs swaymsg exec --";
-  currPath = ./sway-scripts;
+  drun = "pkill wofi || wofi --show drun";
+  currPath = ./.;
 in
 {
   imports = [
    <home-manager/nixos>
   ];
+  programs.sway = {
+    enable = true;
+    wrapperFeatures.gtk = true;
+  };
   home-manager.users.davi = {
     home.pointerCursor = {
       name = cursorTheme;
@@ -23,16 +27,48 @@ in
       gtk.enable = true;
     };
 
-    programs.vscode = {
-      enable = true;
-      package = pkgs.vscodium;
-    };
+    programs.wofi = {
+    enable = true;
+    style = ''window {
+margin: 0px;
+border: 1px solid #928374;
+background-color: #282828;
+}
 
-    home.file = { 
-      ".config/tofi/config" = {
-        text = builtins.readFile ./tofi.settings;
-      };
-    };
+#input {
+margin: 5px;
+border: none;
+color: #ebdbb2;
+background-color: #1d2021;
+}
+
+#inner-box {
+margin: 5px;
+border: none;
+background-color: #282828;
+}
+
+#outer-box {
+margin: 5px;
+border: none;
+background-color: #282828;
+}
+
+#scroll {
+margin: 0px;
+border: none;
+}
+
+#text {
+margin: 5px;
+border: none;
+color: #ebdbb2;
+}
+
+#entry:selected {
+background-color: #1d2021;
+}
+'';};
 
     wayland.windowManager = {
       sway = {
@@ -49,9 +85,9 @@ in
           mode = "3440x1440@144Hz";
         };
         config.defaultWorkspace = "workspace number 1";
-	#config.startup = [
-	#  { command = "" };  
-	#];
+	config.startup = [
+	  { command = "systemctl --user import-environment PATH && systemctl --user restart xdg-desktop-portal.service"; }  
+	];
 	config.window.commands = [
 	  { criteria = { app_id = "dropin"; }; command = "move scratchpad"; }
 	];
@@ -94,3 +130,4 @@ in
     };
   };
 }
+

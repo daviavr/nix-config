@@ -4,5 +4,6 @@
   [
     kitty 
     gnome.gnome-disk-utility
+    wl-clipboard
   ]; 
 }

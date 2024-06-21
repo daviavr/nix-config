@@ -1,6 +1,11 @@
-{ pkgs, ...}:
+{ config, pkgs, ...}:
 {
-  imports = [ ./home-manager.nix ../packages/sys-packages.nix ../packages/usr-packages.nix ];
+  imports = [ 
+    ../packages/sys-packages.nix 
+    ../packages/usr-packages.nix
+    ./sway/default.nix 
+  ];
+
   networking.hostName = "nixos-desktop";
 
   # to enable sway
@@ -23,21 +28,22 @@
   xdg.portal = {
     enable = true;
     wlr.enable = true;
-    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+    extraPortals = with pkgs; [ xdg-desktop-portal-wlr xdg-desktop-portal-gtk ];
+  };
+
+  home-manager.users.davi.programs.vscode = {
+    enable = true;
+    package = pkgs.vscodium;
   };
 
   users.users.davi.packages = with pkgs;
   [ 
-    tofi
-    fuzzel
     swaybg 
-    vscodium 
     jq 
     texlive.combined.scheme-full
+    pavucontrol
   ];
-
-  programs.sway = {
-    enable = true;
-    wrapperFeatures.gtk = true;
-  };
+  environment.systemPackages = with pkgs; [
+    xdg-utils
+  ];
 }

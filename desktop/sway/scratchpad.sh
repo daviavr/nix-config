@@ -1,7 +1,12 @@
 #!/bin/sh
 file="/tmp/scratchpad"
 
-cat $file || echo "0 0 0" > $file
+marks=$(swaymsg -t get_marks | jq '.[0]')
+
+if [[ $marks == null ]]; then
+	echo "0 0 0" > $file
+fi
+
 current=$(cat "$file" | awk '{print $1}')
 total=$(cat "$file" | awk '{print $2}')
 shown=$(cat "$file" | awk '{print $3}')
